@@ -1,0 +1,10 @@
+# Enforce LF for all text files
+* text=auto eol=lf
+
+# Python files should always use LF
+*.py text eol=lf
+
+# SQL and config files use LF
+*.sql text eol=lf
+*.ini text eol=lf
+*.mako text eol=lf
