@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: medcare_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_REALM=medcare
+      - KEYCLOAK_CLIENT=medcare-api
+    depends_on:
+      - db
+      - keycloak
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:15
+    container_name: medcare_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: medcare_keycloak
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
