@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'apt install python3.11-venv'
                 sh 'python3 -m venv venv'
                 sh 'source venv/bin/activate'
                 sh 'pip install --upgrade pip'
