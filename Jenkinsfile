@@ -8,6 +8,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'python3 -m venv venv'
+                sh 'source venv/bin/activate'
+                sh 'pip install --upgrade pip'
                 sh 'pip install -r requirements.txt'
                 sh 'flake8 . || true'
                 sh 'mypy . || true'
