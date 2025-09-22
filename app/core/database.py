@@ -12,12 +12,12 @@ if not db_url:
     raise ValueError("❌ DATABASE_URL not found. Check your .env file!")
 
 engine = create_engine(db_url, future=True,echo=True)
-sessionlocal = sessionmaker(autocommit=True,autoflush=True,bind=engine)
+session = sessionmaker(autoflush=True,bind=engine)
 
 base = declarative_base()
 
 def get_db():
-    db = sessionlocal
+    db = session()
     try:
         yield db
     finally:

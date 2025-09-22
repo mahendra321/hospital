@@ -5,12 +5,12 @@ from app.core.database import base,get_db
 from sqlalchemy.orm import relationship
 from datetime import datetime, timezone
 
-class patients(base):
+class Patients(base):
     __tablename__ = "patients"
     id= Column(UUID(as_uuid=True),nullable=False,primary_key=True)
-    tenat_id=Column(UUID(as_uuid=True),nullable=False)
+    tenant_id=Column(UUID(as_uuid=True),nullable=False)
     mrn=Column(String,nullable=False)
-    give_name=Column(String,nullable=False)
+    given_name=Column(String,nullable=False)
     dob=Column(Date,nullable=True)
     gender=Column(String,nullable=True)
     phone=Column(String,nullable=True)
@@ -27,6 +27,8 @@ class User(base):
 
     id = Column(UUID(as_uuid=True), primary_key=True)
     username = Column(String, unique=True, nullable=False)
+    email = Column(String,nullable=True)
+    password = Column(String,nullable=False)
     role = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -40,5 +42,5 @@ class Encounter(base):
     end_time = Column(DateTime, nullable=True)
     notes = Column(Text)
 
-    patients = relationship("Patients", back_populates="encounters")
+    patient = relationship("Patients", back_populates="encounters")
     
